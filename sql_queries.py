@@ -7,7 +7,7 @@ artist_table_drop = "DROP TABLE IF EXISTS artist"
 time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
-songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplay (songplay_id varchar, start_time time, user_id int, level varchar, \
+songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplay (songplay_id SERIAL PRIMARY KEY, start_time bigint, user_id int, level varchar, \
                                             song_id varchar, artist_id varchar, session_id int, location varchar, user_agent varchar)""")
 
 users_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id int, first_name varchar, last_name varchar, gender varchar, level varchar)""")
@@ -38,9 +38,9 @@ time_table_insert = ("""INSERT INTO time (start_time, hour, day, week, month, ye
 
 # FIND SONGS
 
-song_select = ("""SELECT s.song_id, a.artist_id \
-                FROM (songs s INNER JOIN artists a ON s.artist_id = a.artist_id) \
-                WHERE s.title = %s AND a.name = %s AND s.duration = %s """)
+song_select = ("""SELECT song_id, artist.artist_id \
+                FROM song INNER JOIN artist ON song.artist_id = artist.artist_id \
+                 WHERE title = %s AND name = %s AND duration = %s""")
 
 # QUERY LISTS
 create_table_queries = [songplay_table_create, users_table_create, song_table_create, artist_table_create, time_table_create]
@@ -49,4 +49,4 @@ drop_table_queries = [songplay_table_drop, users_table_drop, song_table_drop, ar
 # TESTING/SANDPIT
 
 if __name__ == "__main__":
-    print(song_table_insert)
+    print(song_select)
