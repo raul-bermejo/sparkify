@@ -8,7 +8,7 @@ More specifically, the goal of this project is to build a PostgreSQL database an
 
 The implemented database schema can be seen in the ER diagram below
 
-![alt text](https://github.com/raul-bermejo/sparkify/blob/main/images/sparkify_erd.png)
+![alt text](https://github.com/raul-bermejo/sparkify/blob/main/images/sparkify_erd_transparent.png)
 
 The Entity Relationshiip Diagram (ERD) above is a Star Schema where the facts (or metrics) are represented by the songplays relation. The reason for this is to have the analysis of log and song data at the heart of the business. From the songplays relation one can observe the dimension of the sparkify business: users, artists, songs and time. Each of these relations represents a core business aspect of sparkify.
 
