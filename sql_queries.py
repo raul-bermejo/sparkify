@@ -20,9 +20,9 @@ time_table_create = ("""CREATE TABLE IF NOT EXISTS time (start_time bigint, hour
 
 # INSERT RECORDS
 
-songplay_table_insert = ("""INSERT INTO songplay (songplay_id, start_time, user_id, level, \
+songplay_table_insert = ("""INSERT INTO songplay (start_time, user_id, level, \
                                             song_id, artist_id, session_id, location, user_agent) \
-                                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""")
+                                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""")
 
 users_table_insert = ("""INSERT INTO users (user_id, first_name, last_name, gender, level) \
                                     VALUES (%s, %s, %s, %s, %s)""")
