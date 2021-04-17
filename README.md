@@ -25,7 +25,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install any of 
 ```bash
 pip install numpy
 pip install pandas
-pip install 
+pip install psycopg2
 ```
 
 ## Authors
