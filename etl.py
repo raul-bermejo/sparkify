@@ -7,6 +7,12 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    Executes INSERT SQL to populate song and artist tables in PostgreSQL.
+
+    Parameters: 
+    ----------
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 

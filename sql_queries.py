@@ -19,38 +19,34 @@ songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplay ( \
                                 user_agent varchar NOT NULL)""")
 
 users_table_create = ("""CREATE TABLE IF NOT EXISTS users ( \
-                                user_id int NOT NULL,  \
+                                user_id int PRIMARY KEY NOT NULL,  \
                                 first_name varchar NOT NULL, \
                                 last_name varchar NOT NULL, \
                                 gender varchar NOT NULL, \
-                                level varchar NOT NULL, \
-                                PRIMARY KEY user_id)""")
+                                level varchar NOT NULL)""")
 
 song_table_create = ("""CREATE TABLE IF NOT EXISTS song ( \
-                            song_id varchar NOT NULL, \
+                            song_id varchar PRIMARY KEY NOT NULL, \
                             title varchar NOT NULL, \
                             artist_id varchar NOT NULL, \
                             year int NOT NULL, \
-                            duration int NOT NULL, \
-                            PRIMARY KEY song_id)""")
+                            duration int NOT NULL)""")
 
 artist_table_create = ("""CREATE TABLE IF NOT EXISTS artist ( \
-                                artist_id varchar NOT NULL, \
+                                artist_id varchar PRIMARY KEY NOT NULL, \
                                 name varchar NOT NULL, \
                                 location varchar NOT NULL, \
                                 latitude float NOT NULL, \
-                                longitude float NOT NULL, \
-                                PRIMARY KEY artist_id)""")
+                                longitude float NOT NULL)""")
 
 time_table_create = ("""CREATE TABLE IF NOT EXISTS time ( \
-                                start_time bigint NOT NULL, \
+                                start_time bigint PRIMARY KEY NOT NULL, \
                                 hour int NOT NULL, \
                                 day int NOT NULL, \
                                 week int NOT NULL, \
                                 month int NOT NULL, \
                                 year int NOT NULL, \
-                                weekday int NOT NULL, \
-                                PRIMARY KEY start_time)""")
+                                weekday int NOT NULL)""")
 
 # INSERT RECORDS
 
@@ -60,7 +56,7 @@ songplay_table_insert = ("""INSERT INTO songplay (start_time, user_id, level, \
 
 users_table_insert = ("""INSERT INTO users (user_id, first_name, last_name, gender, level) \
                                     VALUES (%s, %s, %s, %s, %s) \
-                                    ON CONFLICT level DO UPDATE SET level = EXCLUDED.level """)
+                                    ON CONFLICT (user_id) DO UPDATE SET level = EXCLUDED.level""")
 
 song_table_insert = ("""INSERT INTO song (song_id, title, artist_id, year, duration) \
                                     VALUES (%s, %s, %s, %s, %s)""")
