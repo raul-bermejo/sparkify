@@ -59,8 +59,8 @@ songplay_table_insert = ("""INSERT INTO songplay (start_time, user_id, level, \
                                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""")
 
 users_table_insert = ("""INSERT INTO users (user_id, first_name, last_name, gender, level) \
-                                    VALUES (%s, %s, %s, %s, %s) \ 
-                                    ON CONFLICT level DO NOTHING""")
+                                    VALUES (%s, %s, %s, %s, %s) \
+                                    ON CONFLICT level DO UPDATE SET level = EXCLUDED.level """)
 
 song_table_insert = ("""INSERT INTO song (song_id, title, artist_id, year, duration) \
                                     VALUES (%s, %s, %s, %s, %s)""")
