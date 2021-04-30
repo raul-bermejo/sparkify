@@ -13,7 +13,7 @@ songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplay ( \
                                 user_id int NOT NULL, \
                                 level varchar NOT NULL, \
                                 song_id varchar NOT NULL,  \
-                                rtist_id varchar NOT NULL,  \
+                                artist_id varchar NOT NULL,  \
                                 ession_id int NOT NULL, \
                                 location varchar NOT NULL, \
                                 user_agent varchar NOT NULL)""")
@@ -56,13 +56,14 @@ songplay_table_insert = ("""INSERT INTO songplay (start_time, user_id, level, \
 
 users_table_insert = ("""INSERT INTO users (user_id, first_name, last_name, gender, level) \
                                     VALUES (%s, %s, %s, %s, %s) \
-                                    ON CONFLICT (user_id) DO UPDATE SET level = EXCLUDED.level""")
+                                    ON CONFLICT (user_id) DO NOTHING""")
 
 song_table_insert = ("""INSERT INTO song (song_id, title, artist_id, year, duration) \
                                     VALUES (%s, %s, %s, %s, %s)""")
 
 artist_table_insert = ("""INSERT INTO artist (artist_id, name, location, latitude, longitude) \
-                                    VALUES (%s, %s, %s, %s, %s)""")
+                                    VALUES (%s, %s, %s, %s, %s)
+                                    ON CONFLICT (artist_id) DO NOTHING""")
 
 time_table_insert = ("""INSERT INTO time (start_time, hour, day, week, month, year, weekday) \
                                     VALUES (%s, %s, %s, %s, %s, %s, %s)""")

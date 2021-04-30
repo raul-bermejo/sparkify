@@ -9,9 +9,18 @@ from sql_queries import *
 def process_song_file(cur, filepath):
     """
     Executes INSERT SQL to populate song and artist tables in PostgreSQL.
-
-    Parameters: 
+    from data song_data files which are converted into pd.Dataframes
+    
+    Parameters:
     ----------
+    cur: psycopg2.connect.cursor() object
+         Cursor that enables PostreSQL command execution
+    filepath: str
+              Contains absolute path to datafile so it can be read as pandas.DataFrame           
+
+    Returns: 
+    ----------
+    None: Only SQL commands are exectuted
     """
     # open song file
     df = pd.read_json(filepath, lines=True)
@@ -26,6 +35,22 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    Executes INSERT SQL to populate time and user tables in PostgreSQL 
+    from data log_data files which are converted into pd.Dataframes.
+    
+    Parameters:
+    ----------
+    cur: psycopg2.connect.cursor() object
+         Cursor that enables PostreSQL command execution
+    filepath: str
+              Contains absolute path to datafile so it can be read as pandas.DataFrame           
+
+    Returns: 
+    ----------
+    None: Only SQL commands are exectuted
+    """
+    
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -39,7 +64,7 @@ def process_log_file(cur, filepath):
     # insert time data records
     # turn the time_data collection of pd.Series to transform and transpose
     # to get row by row data (saves having to build a dictionary) 
-    time_data = np.array([df["ts"].values, t.dt.hour, t.dt.day, t.dt.isocalendar().week, t.dt.month, t.dt.year, t.dt.weekday]).T
+    time_data = np.array([df["ts"].values, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.weekday]).T
     column_labels = ("UNIX Timestamp", "Hour", "Day", "Week of Year", "Month", "Year", "Weekday") 
     time_df = pd.DataFrame(time_data, columns=column_labels)
 
@@ -73,6 +98,31 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    ETLs all data by iterating through all song_- 
+    and log_data files and then calling 
+    appropiate processing function. 
+    
+    Executes INSERT SQL to populate time and user tables in PostgreSQL 
+    from data log_data files which are converted into pd.Dataframes.
+    
+    Parameters:
+    ----------
+    cur: psycopg2.connect.cursor() object
+         Cursor that enables PostreSQL command execution into database
+    conn: psycopg2.connect() object
+          Enables PostreSQL connection with database  
+    filepath: str
+              Contains absolute path to datafile so it can be read as pandas.DataFrame         
+    func: function 
+          Processing function to populate either log or song data. Must be either 
+          process_song_file() process_log_file() functions.
+
+    Returns: 
+    ----------
+    None: Data is ETLed without nothing being returned. Databases are populated
+    
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
