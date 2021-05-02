@@ -64,7 +64,7 @@ def process_log_file(cur, filepath):
     # insert time data records
     # turn the time_data collection of pd.Series to transform and transpose
     # to get row by row data (saves having to build a dictionary) 
-    time_data = np.array([df["ts"].values, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.weekday]).T
+    time_data = np.array([df["ts"].values, t.dt.hour, t.dt.day, t.dt.isocalendar().week, t.dt.month, t.dt.year, t.dt.weekday]).T
     column_labels = ("UNIX Timestamp", "Hour", "Day", "Week of Year", "Month", "Year", "Weekday") 
     time_df = pd.DataFrame(time_data, columns=column_labels)
 
